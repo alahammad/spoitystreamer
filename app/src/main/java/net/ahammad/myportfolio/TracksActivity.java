@@ -41,10 +41,12 @@ public class TracksActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.container);
-        String artistID = getIntent().getStringExtra("id");
-        String artistName = getIntent().getStringExtra("name");
-        configActionBar(artistName);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, TracksFragment.getInstance(artistID)).commit();
+        if (savedInstanceState==null) {
+            String artistID = getIntent().getStringExtra("id");
+            String artistName = getIntent().getStringExtra("name");
+            configActionBar(artistName);
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, TracksFragment.getInstance(artistID)).commit();
+        }
     }
 
     private void configActionBar(String artistName){

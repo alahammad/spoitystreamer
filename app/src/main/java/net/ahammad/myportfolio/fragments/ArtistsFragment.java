@@ -41,6 +41,7 @@ public class ArtistsFragment extends BaseFragment implements AdapterView.OnItemC
     }
 
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,7 +67,10 @@ public class ArtistsFragment extends BaseFragment implements AdapterView.OnItemC
                 return false;
             }
         });
-        search("coldplay");
+        if (savedInstanceState!=null){
+            if (mAdapter!=null)
+                mListView.setAdapter(mAdapter);
+        }
     }
 
     @Override
@@ -107,7 +111,5 @@ public class ArtistsFragment extends BaseFragment implements AdapterView.OnItemC
         }.execute();
 
     }
-
-
 
 }

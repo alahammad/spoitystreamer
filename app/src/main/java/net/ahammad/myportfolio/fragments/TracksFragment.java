@@ -56,8 +56,21 @@ public class TracksFragment extends BaseFragment implements AdapterView.OnItemCl
         mProgressBar =(ProgressBar)view.findViewById(R.id.progressBar2);
         mList = (ListView)view.findViewById(R.id.listview);
         mList.setOnItemClickListener(this);
-        String artistID = getArguments().getString("id");
-        loadTracks(artistID);
+        if (savedInstanceState==null) {
+            String artistID = getArguments().getString("id");
+            loadTracks(artistID);
+        }
+ else {
+            if (mAdapter!=null)
+            mList.setAdapter(mAdapter);
+        }
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("han","Asd");
     }
 
     @Override
