@@ -1,5 +1,6 @@
 package net.ahammad.myportfolio.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,12 +24,40 @@ import net.ahammad.myportfolio.adapters.ArtistAdapter;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
+import kaaes.spotify.webapi.android.models.Artist;
 import kaaes.spotify.webapi.android.models.ArtistsPager;
 
 /**
  * Created by alahammad on 6/4/15.
  */
 public class ArtistsFragment extends BaseFragment implements AdapterView.OnItemClickListener{
+
+    public interface Callbacks {
+        /**
+         * Callback for when an item has been selected.
+         */
+        public void onItemSelected(Artist artist);
+    }
+
+    public Callbacks mCallBack;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mCallBack = (Callbacks) activity;
+        }catch (IllegalStateException e){
+
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        // Reset the active callbacks interface to the dummy implementation.
+        mCallBack = null;
+    }
 
     private ProgressBar mProgressBar;
     private EditText mArtistName;
@@ -39,7 +68,6 @@ public class ArtistsFragment extends BaseFragment implements AdapterView.OnItemC
         ArtistsFragment artistsFragment =new ArtistsFragment();
         return artistsFragment;
     }
-
 
 
     @Nullable
@@ -75,10 +103,11 @@ public class ArtistsFragment extends BaseFragment implements AdapterView.OnItemC
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(getActivity(),TracksActivity.class);
-        intent.putExtra("name",mAdapter.getItem(position).name);
-        intent.putExtra("id",mAdapter.getItem(position).id);
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(),TracksActivity.class);
+//        intent.putExtra("name",mAdapter.getItem(position).name);
+//        intent.putExtra("id",mAdapter.getItem(position).id);
+//        getActivity().startActivity(intent);
+        mCallBack.onItemSelected(mAdapter.getItem(position));
     }
 
 
@@ -112,4 +141,10 @@ public class ArtistsFragment extends BaseFragment implements AdapterView.OnItemC
 
     }
 
+    public void setActivateOnItemClick(boolean activateOnItemClick) {
+
+        mListView.setChoiceMode(activateOnItemClick
+                ? ListView.CHOICE_MODE_SINGLE
+                : ListView.CHOICE_MODE_NONE);
+    }
 }

@@ -60,7 +60,7 @@ public class TracksFragment extends BaseFragment implements AdapterView.OnItemCl
             String artistID = getArguments().getString("id");
             loadTracks(artistID);
         }
- else {
+        else {
             if (mAdapter!=null)
             mList.setAdapter(mAdapter);
         }
