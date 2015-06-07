@@ -18,10 +18,10 @@ public class TracksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artists);
         if (savedInstanceState==null) {
-            String artistID = getIntent().getStringExtra("id");
-            String artistName = getIntent().getStringExtra("name");
+            String artistID = getIntent().getStringExtra(ArtistsActivity.ID);
+            String artistName = getIntent().getStringExtra(ArtistsActivity.NAME);
             configActionBar(artistName);
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, TracksFragment.getInstance(artistID)).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, TracksFragment.getInstance(artistID,getIntent().getBooleanExtra(ArtistsActivity.IS_TWO_PANE,false))).commit();
         }
     }
 
