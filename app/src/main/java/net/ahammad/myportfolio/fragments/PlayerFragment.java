@@ -272,10 +272,10 @@ public class PlayerFragment extends DialogFragment implements View.OnClickListen
     public void onDestroy() {
         super.onDestroy();
         myHandler.removeCallbacks(UpdateSongTime);
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-        }
+//        if (mediaPlayer != null) {
+//            mediaPlayer.stop();
+//            mediaPlayer.release();
+//        }
     }
 
 
@@ -291,6 +291,12 @@ public class PlayerFragment extends DialogFragment implements View.OnClickListen
         // remove the dialog title, but you must call the superclass to get the Dialog.
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        if (mediaPlayer!=null){
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+            }
+        }
         return dialog;
     }
 

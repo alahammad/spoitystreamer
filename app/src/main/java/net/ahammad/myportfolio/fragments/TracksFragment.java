@@ -24,6 +24,7 @@ import java.util.Map;
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
 import kaaes.spotify.webapi.android.models.Tracks;
+import retrofit.RetrofitError;
 
 /**
  * Created by alahammad on 6/3/15.
@@ -44,6 +45,8 @@ public class TracksFragment extends BaseFragment implements AdapterView.OnItemCl
         tracksFragment.setArguments(bundle);
         return tracksFragment;
     }
+
+
 
 
     @Nullable
@@ -74,6 +77,7 @@ public class TracksFragment extends BaseFragment implements AdapterView.OnItemCl
 
         MainApp.mTracks = mTracks.tracks;
         if (mTwoPane) {
+
             PlayerFragment playerFragment = PlayerFragment.getInstance(position);
             playerFragment.show(getActivity().getSupportFragmentManager(), "dialog");
         } else {
@@ -94,23 +98,30 @@ public class TracksFragment extends BaseFragment implements AdapterView.OnItemCl
 
             @Override
             protected Tracks doInBackground(Void... params) {
-                SpotifyApi spotifyApi = new SpotifyApi();
-                SpotifyService spotifyService = spotifyApi.getService();
-                Map<String, Object> maps = new HashMap<>();
-                ;
-                maps.put("country", "AR");
-                return spotifyService.getArtistTopTrack(id, maps);
+                try {
+                    SpotifyApi spotifyApi = new SpotifyApi();
+                    SpotifyService spotifyService = spotifyApi.getService();
+                    Map<String, Object> maps = new HashMap<>();
+                    ;
+                    maps.put("country", "AR");
+                    return spotifyService.getArtistTopTrack(id, maps);
+                }catch (RetrofitError error){
+                    return null;
+                }
+
             }
 
             @Override
             protected void onPostExecute(Tracks tracks) {
                 super.onPostExecute(tracks);
-                mProgressBar.setVisibility(View.GONE);
-                mTracks = tracks;
-                mAdapter = new TracksAdapter(tracks, getActivity());
-                mList.setAdapter(mAdapter);
-                if (tracks.tracks.size() == 0) {
-                    Toast.makeText(getActivity(), R.string.no_data_msg, Toast.LENGTH_LONG).show();
+                if(tracks!=null) {
+                    mProgressBar.setVisibility(View.GONE);
+                    mTracks = tracks;
+                    mAdapter = new TracksAdapter(tracks, getActivity());
+                    mList.setAdapter(mAdapter);
+                    if (tracks.tracks.size() == 0) {
+                        Toast.makeText(getActivity(), R.string.no_data_msg, Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         }.execute();

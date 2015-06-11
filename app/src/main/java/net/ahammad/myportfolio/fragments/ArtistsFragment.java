@@ -26,6 +26,7 @@ import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
 import kaaes.spotify.webapi.android.models.Artist;
 import kaaes.spotify.webapi.android.models.ArtistsPager;
+import retrofit.RetrofitError;
 
 /**
  * Created by alahammad on 6/4/15.
@@ -122,20 +123,27 @@ public class ArtistsFragment extends BaseFragment implements AdapterView.OnItemC
 
             @Override
             protected ArtistsPager doInBackground(Void... params) {
-                SpotifyApi api = new SpotifyApi();
-                SpotifyService spotify = api.getService();
-                ArtistsPager results = spotify.searchArtists(name);
-                return results;
+                try {
+                    SpotifyApi api = new SpotifyApi();
+                    SpotifyService spotify = api.getService();
+                    ArtistsPager results = spotify.searchArtists(name);
+                    return results;
+                }catch (RetrofitError error){
+                    return null;
+                }
+
             }
 
             @Override
             protected void onPostExecute(ArtistsPager artistsPager) {
                 super.onPostExecute(artistsPager);
+                if (artistsPager != null) {
                 mProgressBar.setVisibility(View.GONE);
-                mAdapter = new ArtistAdapter(artistsPager,getActivity());
+                mAdapter = new ArtistAdapter(artistsPager, getActivity());
                 mListView.setAdapter(mAdapter);
-                if (artistsPager.artists.items.size()==0)
+                if (artistsPager.artists.items.size() == 0)
                     Toast.makeText(getActivity(), R.string.no_data_msg, Toast.LENGTH_LONG).show();
+                }
             }
         }.execute();
 
