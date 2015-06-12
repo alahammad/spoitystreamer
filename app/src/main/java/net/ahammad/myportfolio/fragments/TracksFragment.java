@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import net.ahammad.myportfolio.ArtistsActivity;
+import net.ahammad.myportfolio.BackgroundAudioService;
 import net.ahammad.myportfolio.PlayerActivity;
 import net.ahammad.myportfolio.MainApp;
 import net.ahammad.myportfolio.R;
@@ -78,7 +80,7 @@ public class TracksFragment extends BaseFragment implements AdapterView.OnItemCl
         MainApp.mTracks = mTracks.tracks;
         if (mTwoPane) {
 
-            PlayerFragment playerFragment = PlayerFragment.getInstance(position);
+            _PlayerFragment playerFragment = _PlayerFragment.getInstance(position);
             playerFragment.show(getActivity().getSupportFragmentManager(), "dialog");
         } else {
             Intent intent = new Intent(getActivity(), PlayerActivity.class);
@@ -127,6 +129,5 @@ public class TracksFragment extends BaseFragment implements AdapterView.OnItemCl
         }.execute();
 
     }
-
 
 }

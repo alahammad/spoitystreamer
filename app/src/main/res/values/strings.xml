@@ -7,4 +7,6 @@
     <string name="no_data_msg">Opps, there is no result for your search !</string>
     <string name="title_item_list">Items</string>
     <string name="title_item_detail">Item Detail</string>
+
+    <string name="playing_now">Playing now</string>
 </resources>

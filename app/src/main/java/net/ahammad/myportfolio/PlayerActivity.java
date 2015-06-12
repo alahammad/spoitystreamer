@@ -46,6 +46,7 @@ import com.squareup.picasso.Picasso;
 
 import net.ahammad.myportfolio.fragments.PlayerFragment;
 import net.ahammad.myportfolio.fragments.TestFragment;
+import net.ahammad.myportfolio.fragments._PlayerFragment;
 
 import java.io.IOException;
 import java.util.List;
@@ -491,10 +492,11 @@ public class PlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
         if(savedInstanceState==null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.player_holder, PlayerFragment.getInstance(getIntent().getIntExtra("pos",-1))).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.player_holder, _PlayerFragment.getInstance(getIntent().getIntExtra("pos", -1))).commit();
 
         }
     }
+
 
 
 

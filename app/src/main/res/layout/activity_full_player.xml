@@ -64,9 +64,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@android:drawable/ic_media_play"
+            android:background="@android:drawable/ic_media_pause"
             android:id="@+id/imageView1"
-            android:visibility="invisible"/>
+            android:visibility="visible"/>
 
         <ImageButton
             android:layout_width="wrap_content"
